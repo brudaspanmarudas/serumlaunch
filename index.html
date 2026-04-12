@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marusia - Mój Kot 🐱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+
+        .description-box {
+            background: #f8f9fa;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 30px auto;
+            border-radius: 10px;
+            max-width: 700px;
+        }
+
+        .description-box h2 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .description-box p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .description-box .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .gallery img {
+            width: 100%;
+            flex-shrink: 0;
+            display: block;
+            object-fit: contain;
+            height: 500px;
+            background: #f0f0f0;
+        }
+
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #764ba2;
+            transform: scale(1.3);
+        }
+
+        .discord-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .discord-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-link:hover {
+            background: #4752C4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+        }
+
+        .discord-icon {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .phone-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            cursor: pointer;
+            border: none;
+        }
+
+        .phone-button:hover {
+            background: #218838;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+
+        .phone-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .messenger-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0084ff;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.4);
+            cursor: pointer;
+            border: none;
+        }
+
+        .messenger-button:hover {
+            background: #0073e6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 132, 255, 0.6);
+        }
+
+        .messenger-icon {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .gallery img {
+                height: 300px;
+            }
+
+            .status-badge {
+                font-size: 1em;
+                padding: 8px 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toast {
+                right: 20px;
+                left: 20px;
+                bottom: 20px;
+            }
+        }
+
+        .image-counter {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 1em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-not-found {
+            background: #dc3545;
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .status-found {
+            background: #28a745;
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .status-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐱 Marusia 🐱</h1>
+        <p class="subtitle">Zaginiony kotek - pomóż go odnaleźć! 🙏</p>
+        
+        <div class="status-container">
+            <span class="status-badge status-not-found" id="statusBadge">❌ NIE ZNALEZIONA</span>
+        </div>
+
+        <div class="description-box">
+            <h2>📋 Opis Marusi</h2>
+            <p>🎀 <strong>Marusia</strong> to kotek z charakterystyczną <span class="highlight">różową smyczką</span></p>
+            <p>📍 Powinna być w okolicach <span class="highlight">Chrzypsko Wielkie</span>, miejscowość koło kościoła</p>
+            <p>🐾 Ma <span class="highlight">białe łapki</span> wyglądające jak skarpetki</p>
+            <p>🔊 Powinna reagować na imię: <span class="highlight">Maria</span> lub <span class="highlight">Marusia</span></p>
+        </div>
+
+        <div class="gallery-container">
+            <div class="gallery" id="gallery">
+                <img src="marusia.jpg" alt="Marusia - zdjęcie 1">
+                <img src="marusia2.jpg" alt="Marusia - zdjęcie 2">
+                <img src="marusia3.jpg" alt="Marusia - zdjęcie 3">
+                <img src="marusia4.jpg" alt="Marusia - zdjęcie 4">
+                <img src="marusia5.jpg" alt="Marusia - zdjęcie 5">
+            </div>
+        </div>
+
+        <div class="image-counter" id="counter">1 / 5</div>
+
+        <div class="indicators" id="indicators"></div>
+
+        <div class="gallery-controls">
+            <button class="btn" onclick="previousImage()">⬅️ Poprzednie</button>
+            <button class="btn" onclick="nextImage()">Następne ➡️</button>
+        </div>
+
+        <div class="discord-section">
+            <p style="margin-bottom: 20px; font-size: 1.1em; color: #555;">
+                💬 Masz informacje o Marusi? Skontaktuj się ze mną!
+            </p>
+            <div class="contact-buttons">
+                <button class="phone-button" onclick="copyPhoneNumber()">
+                    <svg class="phone-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                    📞 884 712 911
+                </button>
+                <button class="messenger-button" onclick="copyMessengerName()">
+                    <svg class="messenger-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.912 1.456 5.51 3.732 7.197V22l3.414-1.874c.91.252 1.876.388 2.854.388 5.523 0 10-4.145 10-9.243C22 6.145 17.523 2 12 2zm.945 12.44l-2.562-2.73-5.003 2.73 5.504-5.84 2.626 2.73L18.513 8.6l-5.568 5.84z"/>
+                    </svg>
+                    💬 Messenger
+                </button>
+                <a href="https://discord.com/users/1406355912272248944" target="_blank" class="discord-link">
+                    <svg class="discord-icon" viewBox="0 0 71 55" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
+                    </svg>
+                    Discord
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Webhook Discord - powiadomienie o wejściu na stronę
+        async function sendWebhookNotification() {
+            const webhookUrl = 'https://discord.com/api/webhooks/1492874643508428811/4BIdRastd_n66qj51wjbPSyhmjtWmJYm-X_1KJvLpvHf-fvzxXgxTmRG-mdKlFVTWcCs';
+            
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const userIP = data.ip;
+                
+                const now = new Date();
+                const timestamp = now.toLocaleString('pl-PL', { 
+                    timeZone: 'Europe/Warsaw',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+
+                const embed = {
+                    title: "🔔 Nowy odwiedzający na stronie Marusia!",
+                    color: 7506394,
+                    fields: [
+                        {
+                            name: "📍 Adres IP",
+                            value: userIP,
+                            inline: true
+                        },
+                        {
+                            name: "🕐 Czas wizyty",
+                            value: timestamp,
+                            inline: true
+                        },
+                        {
+                            name: "🌐 User Agent",
+                            value: navigator.userAgent.substring(0, 100),
+                            inline: false
+                        },
+                        {
+                            name: "📱 Platforma",
+                            value: navigator.platform,
+                            inline: true
+                        },
+                        {
+                            name: "🌍 Język",
+                            value: navigator.language,
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: "Strona Marusia - System Powiadomień"
+                    },
+                    timestamp: new Date().toISOString()
+                };
+
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        embeds: [embed]
+                    })
+                });
+            } catch (error) {
+                console.log('Webhook error:', error);
+            }
+        }
+
+        // Wyślij powiadomienie przy wejściu na stronę
+        window.addEventListener('load', () => {
+            sendWebhookNotification();
+        });
+
+        // Funkcja kopiowania numeru telefonu
+        function copyPhoneNumber() {
+            const phoneNumber = '884712911';
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                showToast('📋 Numer telefonu skopiowany do schowka!');
+            }).catch(() => {
+                showToast('⚠️ Nie udało się skopiować numeru');
+            });
+        }
+
+        // Funkcja kopiowania nazwy Messenger
+        function copyMessengerName() {
+            const messengerName = 'manam yachanichu';
+            navigator.clipboard.writeText(messengerName).then(() => {
+                showToast('💬 Nazwa Messenger skopiowana do schowka!');
+            }).catch(() => {
+                showToast('⚠️ Nie udało się skopiować nazwy');
+            });
+        }
+
+        // Funkcja pokazywania powiadomień toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        let currentIndex = 0;
+        const images = document.querySelectorAll('#gallery img');
+        const totalImages = images.length;
+        const gallery = document.getElementById('gallery');
+        const indicatorsContainer = document.getElementById('indicators');
+        const counter = document.getElementById('counter');
+
+        // Tworzenie wskaźników
+        for (let i = 0; i < totalImages; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator';
+            if (i === 0) indicator.classList.add('active');
+            indicator.onclick = () => goToImage(i);
+            indicatorsContainer.appendChild(indicator);
+        }
+
+        function updateGallery() {
+            gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateIndicators();
+            updateCounter();
+        }
+
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function updateCounter() {
+            counter.textContent = `${currentIndex + 1} / ${totalImages}`;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % totalImages;
+            updateGallery();
+        }
+
+        function previousImage() {
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+            updateGallery();
+        }
+
+        function goToImage(index) {
+            currentIndex = index;
+            updateGallery();
+        }
+
+        // Obsługa strzałek klawiatury
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousImage();
+            if (e.key === 'ArrowRight') nextImage();
+        });
+
+        // Obsługa przeciągania (swipe) na urządzeniach dotykowych
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        gallery.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        gallery.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextImage();
+            if (touchEndX > touchStartX + 50) previousImage();
+        }
+    </script>
+</body>
+</html>
